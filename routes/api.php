@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/authenticate', 'AuthenticationController@authenticate');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('/departments', 'DepartmentController@index');
+    Route::post('/departments', 'DepartmentController@create');
+    Route::post('/departments/{id}', 'DepartmentController@update');
+    Route::delete('/departments/{id}', 'DepartmentController@delete');
+
+    Route::get('/employees', 'EmployeeController@index');
+    Route::post('/employees', 'EmployeeController@create');
+    Route::post('/employees/{id}', 'EmployeeController@update');
 });
