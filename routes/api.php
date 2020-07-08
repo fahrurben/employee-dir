@@ -23,6 +23,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::delete('/departments/{id}', 'DepartmentController@delete');
 
     Route::get('/employees', 'EmployeeController@index');
+    Route::get('/employees/{id}', 'EmployeeController@get');
     Route::post('/employees', 'EmployeeController@create');
     Route::post('/employees/{id}', 'EmployeeController@update');
+    Route::delete('/employees/{id}', 'EmployeeController@delete');
 });

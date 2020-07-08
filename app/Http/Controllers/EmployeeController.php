@@ -19,8 +19,14 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::orderBy('fullname')->paginate();
+        $employees = Employee::orderBy('fullname')->with('department')->paginate();
         return new EmployeeCollection($employees);
+    }
+
+    public function get(int $id)
+    {
+        $employee = Employee::find($id);
+        return response()->json(['data' => $employee], 200);
     }
 
     public function create(Request $request)
@@ -36,7 +42,6 @@ class EmployeeController extends Controller
             'address' => 'required',
             'position' => 'required',
             'department_id' => 'required',
-            'status' => 'required',
         ];
 
         $validator = Validator::make($data, $rules);
@@ -48,6 +53,7 @@ class EmployeeController extends Controller
         try {
             $employee = new Employee();
             $employee->fill($data);
+            $employee->status = 1;
 
             if ($request->hasFile('photo')) {
                 $imgUrl = $request->file('photo');
@@ -80,7 +86,6 @@ class EmployeeController extends Controller
             'address' => 'required',
             'position' => 'required',
             'department_id' => 'required',
-            'status' => 'required',
         ];
 
         $validator = Validator::make($data, $rules);
