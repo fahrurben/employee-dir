@@ -11,6 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        DB::statement("TRUNCATE TABLE employee  RESTART IDENTITY CASCADE");
+        DB::statement("TRUNCATE TABLE department  RESTART IDENTITY CASCADE");
+        DB::statement("TRUNCATE TABLE users_table  RESTART IDENTITY CASCADE");
+
+        $this->call(UserSeeder::class);
+        $this->call(DepartmentSeeder::class);
+        $this->call(EmployeeSeeder::class);
     }
 }
